@@ -1,0 +1,96 @@
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST /cd.com
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST cd.com:80/src/phpAPI/getShellCMD.php
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST cd.com:80/src/phpAPI/getShellCMD.php
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST cd.com:80/src/phpAPI/getShellCMD.php
+Accept: */*
+Cache-Control: no-cache
+
+###
+

@@ -1,0 +1,21 @@
+1.请说出基本数据类型对应八个包装类分别是什么？
+boolean ->Boolean
+byte ->Byte
+char -> Character
+int ->Integer
+short->Short
+long->Long
+float->Float
+double->Double
+
+2.请说出如何把字符串转化为对应的基本数据类型，有什么注意点？
+Integer.parseInt("字符串");
+Byte.parseByte("字符串");
+Boolean.parseBoolean("字符串");
+Short.parseShort("字符串");
+Float.parseFloat("字符串");
+Double.parseDouble("字符串");
+
+只能转化对应目标数据类型的字符串，不然会报对应格式的错误。
+
+

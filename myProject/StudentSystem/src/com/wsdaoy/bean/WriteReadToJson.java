@@ -122,10 +122,24 @@ public class WriteReadToJson {
 
     public void createStudent(String cs){
         Scanner sc = new Scanner(System.in);
+        ArrayList<String> ids = new ArrayList<>();
         String id = null;
-        if("change".startsWith(cs)){
+        while("change".startsWith(cs)){
             System.out.println("输入已存在的学生id：");
             id = sc.nextLine();
+            Iterator<ItemStudent> sit = allStudentList.iterator();
+            while (sit.hasNext()){
+                ItemStudent item = sit.next();
+                ids.add(item.id);
+            }
+            System.out.println(ids);
+            if(id.equals("end")){
+                return;
+            }
+            if(ids.contains(id) ){
+                break;
+            }
+            System.out.println("!!!-->>需要输入正确的id！<<--!!!");
         }
         System.out.println("学生姓名：");
         String name = sc.nextLine();
@@ -150,10 +164,19 @@ public class WriteReadToJson {
         addItemToList(itemStudent,cs);
     }
 
-    private boolean isCheckInputValid(){
+    private boolean isCheckInputValid(String ckStr){
         //拼接字符合法字符
         char[] legalCharArr = {'_','-','.',',','/','\\'};
 
+        char[] chars = ckStr.toCharArray();
+
+        for (char c : chars) {
+
+        }
+
+        if(ckStr.matches("\\D")){
+            return true;
+        }
 
         return false;
     }

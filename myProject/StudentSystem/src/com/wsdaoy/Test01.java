@@ -15,15 +15,15 @@ public class Test01 {
         showInfo.showControl(showInfo.FIEST_SHOW);
         String index1Cmd = sc.nextLine();
         //输入命令的判断
-        while (!"end".startsWith(index1Cmd)){
-            if("1".startsWith(index1Cmd)){
+        while (!"end".equals(index1Cmd)){
+            if("1".equals(index1Cmd)){
                 showInfo.showControl(showInfo.ADD_COMMAND);
                 String index2Cmd = sc.nextLine();
-                while (!"0".startsWith(index2Cmd)){
-                    if ("1".startsWith(index2Cmd)){
+                while (!"0".equals(index2Cmd)){
+                    if ("1".equals(index2Cmd)){
                         System.out.println("录入学生信息：");
                         jo.createStudent("add");
-                    } else if("2".startsWith(index2Cmd)){
+                    } else if("2".equals(index2Cmd)){
                         System.out.println("输入要修改学生的信息：");
                         jo.createStudent("change");
                     }else {
@@ -34,14 +34,14 @@ public class Test01 {
                     index2Cmd = sc.nextLine();
                 }
             }
-            else if("2".startsWith(index1Cmd)){
+            else if("2".equals(index1Cmd)){
                 showInfo.showControl(showInfo.SEARCH_COMMAND);
                 String index2Cmd = sc.nextLine();
-                while (!"0".startsWith(index2Cmd)){
-                    if ("1".startsWith(index2Cmd)){
+                while (!"0".equals(index2Cmd)){
+                    if ("1".equals(index2Cmd)){
                         System.out.println("输入需要查找的学生id：");
 
-                    } else if("2".startsWith(index2Cmd)){
+                    } else if("2".equals(index2Cmd)){
                         //打印全部学生信息
                         System.out.println(jo.showAllStudent());
                         System.out.println();
@@ -54,6 +54,7 @@ public class Test01 {
             }
             showInfo.showControl(showInfo.FIEST_SHOW);
             index1Cmd = sc.nextLine();
+
         }
 
         jo.writeToLocalFile();

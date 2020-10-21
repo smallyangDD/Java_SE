@@ -5,136 +5,42 @@ import com.wsdaoy.util.JsonUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class WriteReadToJson {
     //写数输入到json文件中
-    private String sname;
-    private String sid;
-    private int age;
-    private String phone;
-    private String birthday;
-    private String addr;
-    private static ArrayList<HashMap<String, Object>> allStudentList = new ArrayList<>();
 
-    public WriteReadToJson() {
+    private static ArrayList<ItemStudent> allStudentList = new ArrayList<>();
 
-    }
 
-    public WriteReadToJson(String sname, String sid, int age, String phone, String birthday, String addr) {
-        this.sname = sname;
-        this.sid = sid;
-        this.age = age;
-        this.phone = phone;
-        this.birthday = birthday;
-        this.addr = addr;
-    }
-
-    public String getSname() {
-        return sname;
-    }
-
-    public void setSname(String sname) {
-        this.sname = sname;
-    }
-
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public ArrayList<HashMap<String, Object>> getAllStudentList() {
+    public ArrayList<ItemStudent> getAllStudentList() {
         return allStudentList;
     }
 
-    public void setAllStudentList(ArrayList<HashMap<String, Object>> allStudentList) {
+    public void setAllStudentList(ArrayList<ItemStudent> allStudentList) {
         this.allStudentList = allStudentList;
     }
 
-    public ArrayList<HashMap<String, Object>> addItemToList(HashMap<String, Object> itemStu,String CS) {
+    public ArrayList<ItemStudent> addItemToList(ItemStudent itemStu,String CS) {
         if ("add".startsWith(CS)){
+            //添加学生信息
             allStudentList.add(itemStu);
         }else if ("change".startsWith(CS)){
             //修改学生信息（根据学生的ID）
-            String getId = itemStu.get("id").toString();
+            String getId = itemStu.id;
             int n = 0;
-            for (HashMap<String,Object> item:allStudentList) {
-                if (getId.startsWith(item.get("id").toString())){
+            for (ItemStudent item:allStudentList) {
+                if (getId.startsWith(item.id)){
                     allStudentList.set(n,itemStu);
                 }
                 n++;
             }
         }
-
         return allStudentList;
     }
 
-    public HashMap<String, Object> createItemMap(String sname, String sid, int age, String phone, String birthday, String addr) {
-
-        HashMap<String, Object> jObj = new HashMap<>();
-        this.sname = sname;
-        this.sid = sid;
-        this.age = age;
-        this.phone = phone;
-        this.birthday = birthday;
-        this.addr = addr;
-
-        return getStudentHashMap(sname, sid, age, phone, birthday, addr, jObj);
-    }
-
-    private HashMap<String, Object> getStudentHashMap(String sname, String sid, int age, String phone, String birthday, String addr, HashMap<String, Object> jObj) {
-        jObj.put("name", sname);
-        jObj.put("age", age);
-        jObj.put("id", sid);
-        jObj.put("phone", phone);
-        jObj.put("birthday", birthday);
-        jObj.put("addr", addr);
-
-        return jObj;
-    }
-
-    public HashMap<String, Object> createItemMap(){
-        HashMap<String, Object> jObj = new HashMap<>();
-        return getStudentHashMap(sname, sid, age, phone, birthday, addr, jObj);
-    }
-
+    //写入本地ArrayList转为json文件数据
     public void writeToLocalFile() {
         //打开文件流
         File newFile = new File("./studentList_baseFile.json");
@@ -158,8 +64,9 @@ public class WriteReadToJson {
         }
     }
 
-    public ArrayList<HashMap<String, Object>> readLocalFileJson() {
-        ArrayList<HashMap<String, Object>> rFileToArr = new ArrayList<>();
+    //读取json文件数据转为ArrayList
+    public ArrayList<ItemStudent> readLocalFileJson() {
+        ArrayList<ItemStudent> rFileToArr = new ArrayList<>();
         //打开文件流
         File file = new File("./studentList_baseFile.json");
         JsonUtils json = new JsonUtils();
@@ -180,24 +87,74 @@ public class WriteReadToJson {
         if(null != rJsonToArr){
             for (int i = 0; i < rJsonToArr.size(); i++) {
                 JSONObject obj = rJsonToArr.get(i);
-                HashMap<String, Object> tempMap = new HashMap<>();
-                tempMap.put("name", obj.get("name").toString());
                 int age = (int) obj.get("age");
-                tempMap.put("age", age);
+                String id = null;
                 try{
-                    tempMap.put("id", obj.get("id").toString());
+                    id = obj.get("id").toString();
                 }catch (NullPointerException e){
-                    tempMap.put("id", null);
+                    id = null;
                 }
-                tempMap.put("phone", obj.get("phone").toString());
-                tempMap.put("birthday", obj.get("birthday").toString());
-                tempMap.put("addr", obj.get("addr").toString());
+                //包装学生->Object
+                ItemStudent student = new ItemStudent(obj.get("name").toString(),id,age,
+                        obj.get("phone").toString(),obj.get("birthday").toString(),obj.get("addr").toString());
 
-                rFileToArr.add(tempMap);
+                rFileToArr.add(student);
             }
         }
         //返回解析的java类型对象数组
         return rFileToArr;
     }
 
+    public String showAllStudent(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("打印全部学生的信息：");
+        for (ItemStudent itemStudent : allStudentList) {
+            sb.append("\n\t学号："+itemStudent.id);
+            sb.append("， 姓名："+itemStudent.name);
+            sb.append("， 年龄："+itemStudent.age);
+//            sb.append("， 出生日期："+itemStudent.birthday);
+            sb.append("， 电话："+itemStudent.phone);
+            sb.append("， 地址："+itemStudent.addr);
+        }
+
+        return sb.toString();
+    }
+
+    public void createStudent(String cs){
+        Scanner sc = new Scanner(System.in);
+        String id = null;
+        if("change".startsWith(cs)){
+            System.out.println("输入已存在的学生id：");
+            id = sc.nextLine();
+        }
+        System.out.println("学生姓名：");
+        String name = sc.nextLine();
+        if ("add".startsWith(cs)){
+            System.out.println("学生id：");
+            id = sc.nextLine();
+        }
+        System.out.println("学生联系方式：");
+        String phone = sc.nextLine();
+
+        System.out.println("学生出生日期（格式：xxxx-xx-xx）：");
+        String birthday = sc.nextLine();
+        //自动添加年龄
+
+
+        System.out.println("学生住址：");
+        String addr = sc.nextLine();
+
+        ItemStudent itemStudent = new ItemStudent(name, id, 20, phone, birthday, addr);
+        System.out.print("新添加学生信息：\t");
+        System.out.println(itemStudent);
+        addItemToList(itemStudent,cs);
+    }
+
+    private boolean isCheckInputValid(){
+        //拼接字符合法字符
+        char[] legalCharArr = {'_','-','.',',','/','\\'};
+
+
+        return false;
+    }
 }

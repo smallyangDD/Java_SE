@@ -1,0 +1,2 @@
+请说出四种运行时异常？
+NullPointerException(空指针异常)、IndexOutOfBoundsException(数组集合越界异常)、ArithmeticException(数学运算异常)、TypeNotPresentException(类型不存在异常)

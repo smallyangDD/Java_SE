@@ -1,0 +1,12 @@
+1. 请描述以下方式创建线程的步骤。
+继承Thread类方式：
+public class 类名 extends Thread{
+    重写run()方法；
+}
+在测试类中调用类名并需要通过.start()方法来启动线程。
+
+实现Runnable接口方式：
+public class 类名 implements Runnable{
+    实现抽象run()方法；
+}
+在测试类中调用类名并需要通过.start()方法来启动线程。
